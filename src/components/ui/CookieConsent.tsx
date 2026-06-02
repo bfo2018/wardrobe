@@ -18,8 +18,8 @@ export function CookieConsent() {
   if (hasInteracted || consent !== "undecided" || !visible) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-[9999] p-4 sm:p-6 animate-slide-up">
-      <div className="mx-auto max-w-3xl rounded-xl border border-gold/20 bg-charcoal-light/95 backdrop-blur-xl shadow-2xl shadow-black/40 p-5 sm:p-6">
+    <div className="fixed bottom-0 right-0 z-[9999] p-4 sm:p-6 animate-slide-up">
+      <div className="ml-auto max-w-md rounded-xl border border-gold/20 bg-charcoal-light/95 backdrop-blur-xl shadow-2xl shadow-black/40 p-5 sm:p-6">
         <div className="flex items-start gap-4">
           <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/10">
             <Shield className="h-5 w-5 text-gold" />
