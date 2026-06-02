@@ -2,9 +2,12 @@
 
 import Script from "next/script";
 import { GA4_ID } from "@/lib/tracking";
+import { useCookieConsent } from "@/context/CookieConsentContext";
 
 export function GoogleAnalytics() {
-  if (!GA4_ID) return null;
+  const { consent } = useCookieConsent();
+
+  if (!GA4_ID || consent !== "accepted") return null;
 
   return (
     <>

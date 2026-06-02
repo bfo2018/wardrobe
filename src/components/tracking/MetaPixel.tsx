@@ -2,9 +2,12 @@
 
 import Script from "next/script";
 import { META_PIXEL_ID } from "@/lib/tracking";
+import { useCookieConsent } from "@/context/CookieConsentContext";
 
 export function MetaPixel() {
-  if (!META_PIXEL_ID) return null;
+  const { consent } = useCookieConsent();
+
+  if (!META_PIXEL_ID || consent !== "accepted") return null;
 
   return (
     <>

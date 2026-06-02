@@ -1,6 +1,8 @@
 /**
  * Unified tracking — fires events to Meta Pixel + Google Analytics 4.
- * Scripts only load when env IDs are set; calls are safe to make regardless.
+ * Scripts only load when env IDs are set AND the user has accepted cookies.
+ * All public functions are safe to call regardless of consent state — they
+ * silently no-op if tracking globals aren't loaded.
  */
 
 /* ---------- types ---------- */
@@ -27,8 +29,15 @@ interface EventParams {
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "";
 export const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "";
 
+const STORAGE_KEY = "wr_cookie_consent";
+
+function hasConsent(): boolean {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem(STORAGE_KEY) === "accepted";
+}
+
 function fbq(eventName: string, params?: EventParams) {
-  if (typeof window !== "undefined" && window.fbq) {
+  if (typeof window !== "undefined" && window.fbq && hasConsent()) {
     if (params) {
       window.fbq("track", eventName, params);
     } else {
@@ -38,7 +47,7 @@ function fbq(eventName: string, params?: EventParams) {
 }
 
 function gtag(eventName: string, params?: Record<string, unknown>) {
-  if (typeof window !== "undefined" && window.gtag) {
+  if (typeof window !== "undefined" && window.gtag && hasConsent()) {
     window.gtag("event", eventName, params);
   }
 }

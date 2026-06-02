@@ -4,6 +4,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BookingModalProvider } from "@/context/BookingModalContext";
 import { BookingModal } from "@/components/booking/BookingModal";
+import { CookieConsentProvider } from "@/context/CookieConsentContext";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
 import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
 import { PageViewTracker } from "@/components/tracking/PageViewTracker";
@@ -42,15 +44,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="font-body antialiased">
-        <MetaPixel />
-        <GoogleAnalytics />
-        <BookingModalProvider>
-          <PageViewTracker />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <BookingModal />
-        </BookingModalProvider>
+        <CookieConsentProvider>
+          <MetaPixel />
+          <GoogleAnalytics />
+          <BookingModalProvider>
+            <PageViewTracker />
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <BookingModal />
+          </BookingModalProvider>
+          <CookieConsent />
+        </CookieConsentProvider>
       </body>
     </html>
   );
